@@ -1,10 +1,19 @@
 # Build the libpurple protocol plugins and publish them as release assets.
 #
-# This workflow reads the pinned sourceRef of each plugin from plugins.json.
-# It clones each upstream repository at that ref and builds it on Apple
-# Silicon. The release assets feed plugins.json: after a release, copy each
-# asset URL into binaryUrl and the matching line from checksums.txt into
-# sha256. This workflow does not update plugins.json.
+# The "setup" job reads the plugin list from plugins.json. The "build" job
+# fans out into one matrix job per plugin. Each matrix job clones the plugin
+# sourceUrl at its pinned sourceRef on Apple Silicon and runs the build
+# recipe at recipes/<id>.sh. The "release" job merges the binaries, computes
+# checksums, and (on a "plugins-v*" tag) cuts a GitHub Release.
+#
+# Recipe contract: the recipe runs inside the plugin source checkout. It
+# builds the plugin and copies the produced .so files into $DIST. It installs
+# its own extra Homebrew dependencies; the workflow installs only the common
+# libpurple toolchain.
+#
+# The release assets feed plugins.json: after a release, copy each asset URL
+# into binaryUrl and the matching line from checksums.txt into sha256. This
+# workflow does not update plugins.json.
 #
 # Trigger this workflow by hand (workflow_dispatch), or push a tag that
 # matches "plugins-v*" to also cut a GitHub Release.
@@ -18,52 +27,75 @@ on:
       - "plugins-v*"
 
 jobs:
-  build:
-    runs-on: macos-14
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      plugins: ${{ steps.list.outputs.plugins }}
     steps:
       - name: Check out catalog
         uses: actions/checkout@v4
 
-      - name: Install build dependencies
-        run: |
-          brew install pidgin glib json-glib gettext opusfile gdk-pixbuf pkg-config go
+      - name: List plugins
+        id: list
+        run: echo "plugins=$(jq -c '[.plugins[].id]' plugins.json)" >> "$GITHUB_OUTPUT"
 
-      - name: Clone pinned plugin sources
-        run: |
-          TEAMS_REF=$(jq -r '.plugins[] | select(.id == "purple-teams") | .sourceRef' plugins.json)
-          WA_REF=$(jq -r '.plugins[] | select(.id == "purple-gowhatsapp") | .sourceRef' plugins.json)
-          git clone https://github.com/EionRobb/purple-teams.git build/purple-teams
-          git -C build/purple-teams checkout "$TEAMS_REF"
-          git clone --recurse-submodules https://github.com/hoehermann/purple-gowhatsapp.git build/purple-gowhatsapp
-          git -C build/purple-gowhatsapp checkout --recurse-submodules "$WA_REF"
+  build:
+    needs: setup
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        plugin: ${{ fromJSON(needs.setup.outputs.plugins) }}
+    steps:
+      - name: Check out catalog
+        uses: actions/checkout@v4
 
-      - name: Build purple-teams
+      - name: Install common build dependencies
         run: |
-          make -C build/purple-teams
+          brew install pidgin glib json-glib gettext pkg-config
 
-      - name: Build purple-gowhatsapp
+      - name: Clone pinned plugin source
         run: |
-          CGO_LDFLAGS="$(pkg-config --libs glib-2.0 purple opusfile gdk-pixbuf-2.0) -framework CoreFoundation -framework Security -lresolv"
-          make -C build/purple-gowhatsapp libwhatsmeow.so CGO_LDFLAGS="$CGO_LDFLAGS"
+          URL=$(jq -r --arg id "${{ matrix.plugin }}" \
+            '.plugins[] | select(.id == $id) | .sourceUrl' plugins.json)
+          REF=$(jq -r --arg id "${{ matrix.plugin }}" \
+            '.plugins[] | select(.id == $id) | .sourceRef' plugins.json)
+          git clone --recurse-submodules "$URL.git" src
+          git -C src checkout --recurse-submodules "$REF"
 
-      - name: Collect plugin binaries
+      - name: Run build recipe
         run: |
           mkdir -p dist
-          cp build/purple-teams/libteams.so dist/
-          if [ -f build/purple-teams/libteams-personal.so ]; then
-            cp build/purple-teams/libteams-personal.so dist/
-          fi
-          cp build/purple-gowhatsapp/libwhatsmeow.so dist/
-
-      - name: Compute checksums
-        run: |
-          cd dist
-          shasum -a 256 *.so > checksums.txt
-          cat checksums.txt
+          export DIST="$GITHUB_WORKSPACE/dist"
+          cd src
+          bash "$GITHUB_WORKSPACE/recipes/${{ matrix.plugin }}.sh"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         if: always()
+        with:
+          name: plugin-${{ matrix.plugin }}
+          path: dist/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download plugin binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: plugin-*
+          merge-multiple: true
+          path: dist
+
+      - name: Compute checksums
+        run: |
+          cd dist
+          sha256sum *.so > checksums.txt
+          cat checksums.txt
+
+      - name: Upload merged artifact
+        uses: actions/upload-artifact@v4
         with:
           name: plugins
           path: dist/

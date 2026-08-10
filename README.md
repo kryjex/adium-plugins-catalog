@@ -12,6 +12,7 @@ bundles a fallback copy of the catalog for offline use.
   verifies the checksum before it copies the binary.
 - The CI workflow builds every plugin from its pinned `sourceRef` on an
   Apple Silicon runner and attaches the `.so` files to a GitHub Release.
+  One matrix job per plugin runs the build recipe at `recipes/<id>.sh`.
 
 ## How to release binaries
 
@@ -29,6 +30,9 @@ Open a pull request that adds an entry to `plugins.json`:
 
 - The plugin must build against libpurple 2.x on macOS arm64.
 - Set `sourceUrl`, a pinned `sourceRef` (commit hash), and the license.
+- Add a build recipe at `recipes/<id>.sh`. The recipe runs inside the plugin
+  source checkout, installs its extra Homebrew dependencies, builds, and
+  copies the `.so` files into `$DIST`.
 - Leave `binaryUrl` and `sha256` as `null`. A maintainer cuts the release.
 
 Plugins run native code with the same privileges as the app. Only curated
