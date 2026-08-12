@@ -1,6 +1,7 @@
 #!/bin/bash
-# Build recipe for purple-gowhatsapp (whatsmeow).
-# Runs inside the plugin source checkout. Copies the binary into $DIST.
+# The upstream Makefile is for Linux. On macOS, the Go runtime also needs
+# the CoreFoundation framework, the Security framework, and libresolv at
+# link time.
 set -euo pipefail
 
 brew install go opusfile gdk-pixbuf

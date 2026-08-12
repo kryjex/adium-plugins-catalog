@@ -1,11 +1,8 @@
 #!/bin/bash
-# Build recipe for purple-teams.
-# Runs inside the plugin source checkout. Copies the binaries into $DIST.
+# The default make target builds the work variant and the personal variant.
+# This recipe supplies the two .so files.
 set -euo pipefail
 
 make
 
-cp libteams.so "$DIST/"
-if [ -f libteams-personal.so ]; then
-  cp libteams-personal.so "$DIST/"
-fi
+cp libteams.so libteams-personal.so "$DIST/"

@@ -3,6 +3,7 @@
   "plugins": [
     {
       "id": "purple-teams",
+      "recipe": "purple-teams",
       "name": "Microsoft Teams",
       "filename": "libteams.so",
       "protocolId": "prpl-eionrobb-msteams",
@@ -18,7 +19,25 @@
       "license": "GPL-3.0"
     },
     {
+      "id": "purple-teams-personal",
+      "recipe": "purple-teams",
+      "name": "Microsoft Teams (Personal)",
+      "filename": "libteams-personal.so",
+      "protocolId": "prpl-eionrobb-msteams-personal",
+      "description": {
+        "en": "Microsoft Teams for personal Microsoft accounts, through the Teams web services.",
+        "es": "Microsoft Teams para cuentas personales de Microsoft, a través de los servicios web de Teams."
+      },
+      "version": "2026.06.15",
+      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v1/libteams-personal.so",
+      "sha256": "cf1ccea45105676dc4a59741508f55b0319a4c34a31d8e0c18f0a99e8f80eba1",
+      "sourceUrl": "https://github.com/EionRobb/purple-teams",
+      "sourceRef": "f903669b337ad8efabf134595147cc2db039de7a",
+      "license": "GPL-3.0"
+    },
+    {
       "id": "purple-gowhatsapp",
+      "recipe": "purple-gowhatsapp",
       "name": "WhatsApp (whatsmeow)",
       "filename": "libwhatsmeow.so",
       "protocolId": "prpl-hehoe-whatsmeow",
