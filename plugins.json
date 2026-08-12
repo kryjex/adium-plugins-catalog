@@ -11,11 +11,11 @@
         "en": "Microsoft Teams chat, group chats, and call links through the Teams web services.",
         "es": "Chat de Microsoft Teams, chats grupales y enlaces de llamada a través de los servicios web de Teams."
       },
-      "version": "2026.08.11",
+      "version": "2026.08.12",
       "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v3/libteams.so",
       "sha256": "70cbdf950945e643a42ea0c758d5a17f2b5ca610dd91c470c4f409ed78880aa1",
       "sourceUrl": "https://github.com/EionRobb/purple-teams",
-      "sourceRef": "df1e04bead81ff60bb25370c4474991d3fa3fd42",
+      "sourceRef": "62f6fffbf86c41775a1af7cb3f33edbb3f0e09ea",
       "license": "GPL-3.0"
     },
     {
@@ -28,11 +28,11 @@
         "en": "Microsoft Teams for personal Microsoft accounts, through the Teams web services.",
         "es": "Microsoft Teams para cuentas personales de Microsoft, a través de los servicios web de Teams."
       },
-      "version": "2026.08.11",
+      "version": "2026.08.12",
       "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v3/libteams-personal.so",
       "sha256": "40633c1781ed36e8cd652c50870dce4eda8617a56de49bfff165952e3b7f438a",
       "sourceUrl": "https://github.com/EionRobb/purple-teams",
-      "sourceRef": "df1e04bead81ff60bb25370c4474991d3fa3fd42",
+      "sourceRef": "62f6fffbf86c41775a1af7cb3f33edbb3f0e09ea",
       "license": "GPL-3.0"
     },
     {
