@@ -10,7 +10,7 @@ brew install libolm libgcrypt sqlite
 
 prefix="$(brew --prefix)"
 export PKG_CONFIG_PATH="$prefix/opt/sqlite/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
-export CPATH="$PWD/http_parser:$prefix/opt/pidgin/include:${CPATH:-}"
+export CPATH="$PWD/http_parser:$prefix/opt/pidgin/include:$prefix/opt/libolm/include:${CPATH:-}"
 export LIBRARY_PATH="$prefix/opt/libolm/lib:$prefix/opt/libgcrypt/lib:${LIBRARY_PATH:-}"
 
 HTTP_PARSER_TAG=v2.9.4
