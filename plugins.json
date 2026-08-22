@@ -51,6 +51,21 @@
       "sourceUrl": "https://github.com/hoehermann/purple-gowhatsapp",
       "sourceRef": "5a725916f15322751421ed07351eb9378169c062",
       "license": "GPL-3.0"
+    },
+    {
+      "id": "purple-matrix",
+      "recipe": "purple-matrix",
+      "name": "Matrix",
+      "filename": "libmatrix.so",
+      "protocolId": "prpl-matrix",
+      "description": {
+        "en": "Matrix rooms and direct messages on any homeserver, with end-to-end encrypted rooms via libolm.",
+        "es": "Salas y mensajes directos de Matrix en cualquier homeserver, con salas cifradas de extremo a extremo mediante libolm."
+      },
+      "version": "2023.04.24",
+      "sourceUrl": "https://github.com/matrix-org/purple-matrix",
+      "sourceRef": "2792d4db0916ad821886de1f8de3a5e46c66ca37",
+      "license": "GPL-2.0"
     }
   ]
 }
