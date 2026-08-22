@@ -3,7 +3,8 @@
 # sqlite through pkg-config (keg-only on Homebrew), and expects a
 # Debian-style include root (<libpurple/request.h>). The classic nodejs
 # http_parser was removed from Homebrew, so it is vendored at build time
-# and injected into the link line via LOADLIBES.
+# and injected into the link line via LOADLIBES. CPPFLAGS turns off
+# -Werror: upstream format strings assume LP64 long for gint64.
 set -euo pipefail
 
 brew install libolm libgcrypt sqlite
@@ -22,6 +23,6 @@ tar xzf /tmp/http_parser.tar.gz -C http_parser --strip-components=1
 
 cc -c http_parser/http_parser.c -o http_parser/http_parser.o
 
-make -j"$(sysctl -n hw.ncpu)" LOADLIBES="http_parser/http_parser.o"
+make -j"$(sysctl -n hw.ncpu)" CPPFLAGS="-Wno-error" LOADLIBES="http_parser/http_parser.o"
 
 cp libmatrix.so "$DIST/"
