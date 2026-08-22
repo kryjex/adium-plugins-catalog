@@ -12,8 +12,8 @@
         "es": "Chat de Microsoft Teams, chats grupales y enlaces de llamada a través de los servicios web de Teams."
       },
       "version": "2026.08.12",
-      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v3/libteams.so",
-      "sha256": "70cbdf950945e643a42ea0c758d5a17f2b5ca610dd91c470c4f409ed78880aa1",
+      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v5/libteams.so",
+      "sha256": "be1ffa4cbcaf173510ef3381cc656f8c3678dc8b2dec53c6adab278e5550c815",
       "sourceUrl": "https://github.com/EionRobb/purple-teams",
       "sourceRef": "62f6fffbf86c41775a1af7cb3f33edbb3f0e09ea",
       "license": "GPL-3.0"
@@ -29,8 +29,8 @@
         "es": "Microsoft Teams para cuentas personales de Microsoft, a través de los servicios web de Teams."
       },
       "version": "2026.08.12",
-      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v3/libteams-personal.so",
-      "sha256": "40633c1781ed36e8cd652c50870dce4eda8617a56de49bfff165952e3b7f438a",
+      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v5/libteams-personal.so",
+      "sha256": "d5807afb9d3488a5f1b3bff0223f2cd01494595adf4fb9d128a10528beec2ce6",
       "sourceUrl": "https://github.com/EionRobb/purple-teams",
       "sourceRef": "62f6fffbf86c41775a1af7cb3f33edbb3f0e09ea",
       "license": "GPL-3.0"
@@ -46,8 +46,8 @@
         "es": "Mensajería de WhatsApp mediante la librería whatsmeow, con vinculación por código QR."
       },
       "version": "2026.08.11",
-      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v3/libwhatsmeow.so",
-      "sha256": "8c8b5baa0c15a324ea3fa9af8d6f381cd1dd80654f72190764f4b4764f743b18",
+      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v5/libwhatsmeow.so",
+      "sha256": "17606723a32abb9781c2d326b493c68148b8ea7b00028fd82c7093cbe7d2d1cb",
       "sourceUrl": "https://github.com/hoehermann/purple-gowhatsapp",
       "sourceRef": "5a725916f15322751421ed07351eb9378169c062",
       "license": "GPL-3.0"
@@ -65,7 +65,9 @@
       "version": "2023.04.24",
       "sourceUrl": "https://github.com/matrix-org/purple-matrix",
       "sourceRef": "2792d4db0916ad821886de1f8de3a5e46c66ca37",
-      "license": "GPL-2.0"
+      "license": "GPL-2.0",
+      "binaryUrl": "https://github.com/kryjex/adium-plugins-catalog/releases/download/plugins-v5/libmatrix.so",
+      "sha256": "04ae17e40674db842b7bf113ecabe00d0d4737710c506863872cff86c6a0d711"
     }
   ]
 }
